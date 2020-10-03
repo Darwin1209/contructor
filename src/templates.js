@@ -1,44 +1,30 @@
+import { row, col, css } from './utils'
+
 export const templates = {
   title(block) {
-    return `
-      <div class="row">
-        <div class="col-sm">
-        <h1>${block.value}</h1>
-        </div>
-      </div>
-    `
+    const { tag = 'h1', styles } = block.options
+    return row(col(`<${tag}>${block.value}</${tag}>`), css(styles))
   },
 
   text(block) {
-    return `
-      <div class="row">
-        <div class="col-sm">
-          <p>${block.value}</p>
-        </div>
-      </div>
-    `
+    return row(col(`<p>${block.value}</p>`))
   },
 
   columns(block) {
-    return `
-      <div class="row">
-      ${block.value.reduce(
+    return row(
+      block.value.reduce(
         (acc, val) => `${acc}
-        <div class="col-sm">
-          <p>${val}</p>
-        </div>
+          ${col(`<p>${val}</p>`)}
         `,
         ''
-      )}
-      </div>
-    `
+      )
+    )
   },
 
   image(block) {
-    return `
-      <div class="row">
-        <img src=${block.value} />
-      </div>
-    `
+    const { imageStyles, alt = '', styles } = block.options
+    return row(
+      `<img src=${block.value} alt="${alt}" style="${css(imageStyles)}"/>`
+    )
   },
 }

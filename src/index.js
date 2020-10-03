@@ -5,7 +5,8 @@ import './styles/main.css'
 const $site = document.querySelector('#site')
 
 model.forEach((block) => {
-  const html = templates[block.type](block)
-  console.log(html)
-  $site.insertAdjacentHTML('beforeend', html)
+  const toHtml = templates[block.type]
+  if (toHtml) {
+    $site.insertAdjacentHTML('beforeend', toHtml(block))
+  }
 })
